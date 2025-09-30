@@ -195,10 +195,6 @@ Automa-o-Industrial---ENE090/
 - **Davi Vieira**
 - **Rafael Salzer**
 
-## 📧 Contato
-
-Para dúvidas ou sugestões relacionadas ao conteúdo deste repositório, entre em contato através dos canais oficiais da disciplina.
-
 ---
 
 **Universidade Federal de Juiz de Fora (UFJF)**  
