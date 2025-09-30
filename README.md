@@ -184,9 +184,16 @@ Automa-o-Industrial---ENE090/
 └── materiais/
 ```
 
-## 🤝 Contribuições
+## 👥 Equipe
 
-Este repositório está em constante desenvolvimento durante o semestre letivo.
+### Professor:
+- **Manuel Honório**
+
+### Alunos:
+- **Rafael Mimura**
+- **Ana Luisa Basílio**
+- **Davi Vieira**
+- **Rafael Salzer**
 
 ## 📧 Contato
 
@@ -194,5 +201,5 @@ Para dúvidas ou sugestões relacionadas ao conteúdo deste repositório, entre 
 
 ---
 
-**Universidade Federal de Minas Gerais (UFMG)**  
+**Universidade Federal de Juiz de Fora (UFJF)**  
 *Automação Industrial - ENE090*
