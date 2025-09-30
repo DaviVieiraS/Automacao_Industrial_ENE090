@@ -50,6 +50,12 @@ O primeiro seminário da disciplina aborda o tema **Internet das Coisas (IoT)** 
   - Alcance de até 10 metros
   - Pareamento ponto-a-ponto
   
+- **NFC (Near Field Communication, 2002-2004)** – comunicação de campo próximo para IoT e pagamentos
+  - Alcance ultra-curto (até 10 cm)
+  - Comunicação por indução magnética
+  - Aplicações em pagamentos mobile, controle de acesso e identificação
+  - Baseado em RFID de alta frequência (13.56 MHz)
+  
 - **Zigbee (2003/2004)** – rede mesh de baixo consumo para automação e indústrias
   - Protocolo IEEE 802.15.4
   - Redes mesh auto-organizáveis
