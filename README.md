@@ -334,7 +334,7 @@ Automa-o-Industrial---ENE090/
 
 **Professor:**
 
-* Manuel Honório
+* Leonardo Honório
 
 **Alunos:**
 
