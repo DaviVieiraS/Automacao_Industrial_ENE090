@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <RadioLib.h>
 #include <U8g2lib.h>
+#include <ArduinoJson.h>
 #include <Wire.h>
 #include <SPI.h>
 
@@ -23,8 +24,8 @@
 #define FREQ_BEGIN 400.0    // Start frequency in MHz (extended range)
 #define FREQ_END 960.0      // End frequency in MHz (SX1262 limit)
 #define FREQ_STEPS 64       // Number of frequency steps (limited by display width)
-#define SAMPLES_PER_FREQ 128 // Number of samples per frequency step
-#define SCAN_DELAY 100      // Delay between frequency steps (ms)
+#define SAMPLES_PER_FREQ 64 // Number of samples per frequency step (reduced for speed)
+#define SCAN_DELAY 10       // Delay between frequency steps (ms) for faster updates
 
 // Different frequency bands for testing
 #define BAND_433 433.0      // 433 MHz ISM band
@@ -73,6 +74,7 @@ void drawSpectrum();
 void drawAxes();
 float getRSSIAtFrequency(float frequency);
 void monitorSingleFrequency();
+void printJsonSnapshot();
 
 void setup() {
   // Initialize Serial Monitor
@@ -294,6 +296,8 @@ void scanSpectrum() {
     currentStep++;
     if (currentStep >= FREQ_STEPS) {
       currentStep = 0;
+      // Emit one JSON snapshot over Serial after each full sweep
+      printJsonSnapshot();
     }
     
     // Print to serial for debugging
@@ -397,6 +401,28 @@ void updateDisplay() {
   u8g2.drawStr(DISPLAY_WIDTH - u8g2.getStrWidth(freqRange.c_str()), DISPLAY_HEIGHT - 2, freqRange.c_str());
   
   u8g2.sendBuffer();
+}
+
+// Emit JSON payload for PC bridge (MQTT/HTTP forwarder)
+void printJsonSnapshot() {
+  StaticJsonDocument<4096> doc;
+  doc["timestamp"] = millis();
+  doc["deviceId"] = "heltec-v3";
+  doc["freqBegin"] = FREQ_BEGIN;
+  doc["freqEnd"] = FREQ_END;
+  doc["freqSteps"] = FREQ_STEPS;
+
+  JsonArray data = doc.createNestedArray("data");
+  for (int i = 0; i < FREQ_STEPS; i++) {
+    JsonObject point = data.createNestedObject();
+    float freq = FREQ_BEGIN + (i * (FREQ_END - FREQ_BEGIN) / FREQ_STEPS);
+    point["freq"] = freq;
+    point["rssi"] = spectrumData[i];
+  }
+
+  String out;
+  serializeJson(doc, out);
+  Serial.println(out);
 }
 
 void drawSpectrum() {

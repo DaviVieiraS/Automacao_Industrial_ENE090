@@ -11,11 +11,11 @@
 #include <ArduinoJson.h>
 
 // WiFi credentials
-const char* WIFI_SSID = "YOUR_WIFI_SSID";
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+const char* WIFI_SSID = "Redmi";
+const char* WIFI_PASSWORD = "davilindo";
 
 // API endpoint (your Vercel URL)
-const char* API_ENDPOINT = "https://your-app.vercel.app/api/spectrum";
+const char* API_ENDPOINT = "https://automacao-industrial-ene-090-xwqc.vercel.app";
 
 // LoRa configuration (SX1262)
 #define LORA_NSS 8

@@ -23,7 +23,7 @@ export default function Home() {
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
   useEffect(() => {
-    // Poll for new data every second
+    // Poll for new data every 250ms for snappier updates
     const interval = setInterval(async () => {
       try {
         const response = await fetch('/api/spectrum');
@@ -39,7 +39,7 @@ export default function Home() {
         console.error('Error fetching data:', error);
         setIsConnected(false);
       }
-    }, 1000);
+    }, 250);
 
     return () => clearInterval(interval);
   }, []);
@@ -49,6 +49,12 @@ export default function Home() {
     frequency: point.freq.toFixed(1),
     RSSI: point.rssi
   })) || [];
+
+  // Auto-scale Y axis with padding
+  const rssiValues = chartData.map(d => d.RSSI);
+  const minRssi = rssiValues.length ? Math.min(...rssiValues) : -140;
+  const maxRssi = rssiValues.length ? Math.max(...rssiValues) : -40;
+  const padding = 5;
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
@@ -88,11 +94,11 @@ export default function Home() {
       {/* Spectrum Chart */}
       <div style={{ 
         backgroundColor: 'white', 
-        padding: '20px', 
-        borderRadius: '5px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        padding: '24px', 
+        borderRadius: '12px',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
       }}>
-        <h2>RF Spectrum</h2>
+        <h2 style={{ marginTop: 0, marginBottom: 12 }}>RF Spectrum</h2>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -104,7 +110,7 @@ export default function Home() {
             />
             <YAxis 
               label={{ value: 'RSSI (dBm)', angle: -90, position: 'insideLeft' }}
-              domain={[-140, -40]}
+              domain={[minRssi - padding, maxRssi + padding]}
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toFixed(1)} dBm`, 'RSSI']}
@@ -114,8 +120,8 @@ export default function Home() {
             <Line 
               type="monotone" 
               dataKey="RSSI" 
-              stroke="#8884d8" 
-              strokeWidth={2}
+              stroke="#6c5ce7" 
+              strokeWidth={2.5}
               dot={false}
               isAnimationActive={false}
             />
