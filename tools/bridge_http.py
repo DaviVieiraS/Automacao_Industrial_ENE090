@@ -21,7 +21,7 @@ SERIAL_PORT = 'COM6'
 BAUD = 115200
 
 # Your deployed Vercel API endpoint for spectrum data:
-API_ENDPOINT = 'https://automacao-industrial-ene-090-xwqc.vercel.app/api/spectrum'
+API_ENDPOINT = 'https://automacao-industrial-ene-090.vercel.app/api/spectrum'
 # =============================
 
 
